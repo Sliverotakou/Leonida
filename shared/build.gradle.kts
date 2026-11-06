@@ -5,8 +5,11 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.sqldelight) // Le plugin
-    alias(libs.plugins.kotlin.serialization)}
+    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.koin.compiler)
+    alias(libs.plugins.kotlin.serialization)
+}
+
 
 kotlin {
     listOf(
@@ -20,7 +23,7 @@ kotlin {
     }
     
     android {
-       namespace = "com.example.leonida.shared"
+       namespace = "com.sliver.leonida.shared"
        compileSdk = libs.versions.android.compileSdk.get().toInt()
        minSdk = libs.versions.android.minSdk.get().toInt()
     
@@ -61,6 +64,8 @@ kotlin {
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
+            implementation(libs.material.icons.extended)
+
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
@@ -76,6 +81,7 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
+            implementation(libs.koin.annotations) // Nécessaire pour avoir accès aux annotations
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -87,7 +93,7 @@ kotlin {
 sqldelight {
     databases {
         create("LeonidaDatabase") {
-            packageName.set("com.example.leonida.db")
+            packageName.set("com.sliver.leonida.db")
         }
     }
 }
